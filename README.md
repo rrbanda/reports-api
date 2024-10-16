@@ -1,8 +1,12 @@
 # Reports API
 
-## To run locally 
++-------------------+          +-------------------+
+|                   |          |                   |
+|   FastAPI App     | <------> |    MongoDB        |
+|   (Podman)        |          |    (Podman)       |
+|                   |          |                   |
++-------------------+          +-------------------+
 
-` `
 
 ## Build the api service container 
 
