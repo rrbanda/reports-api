@@ -12,7 +12,7 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    mongodb-clients \
+    mongodb-tools \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies

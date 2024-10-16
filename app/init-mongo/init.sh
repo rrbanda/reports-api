@@ -1,13 +1,12 @@
-# app/init-mongo/init.sh
-
 #!/bin/bash
+# app/init-mongo/init.sh
 
 # Exit immediately if a command exits with a non-zero status
 set -e
 
 # Wait for MongoDB to be ready
 echo "Waiting for MongoDB to be ready..."
-until mongo --host localhost --port 27017 --eval "print(\"waited for connection\")"
+until mongo --host localhost --port 27017 --eval "print(\"waited for connection\")" &>/dev/null
 do
     sleep 1
 done

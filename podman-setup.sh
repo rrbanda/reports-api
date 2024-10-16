@@ -1,6 +1,5 @@
 #!/bin/bash
-
-# podman_setup.sh script
+# podman_setup.sh
 
 # Exit immediately if a command exits with a non-zero status
 set -e
@@ -10,7 +9,7 @@ NETWORK_NAME="ai_network"
 MONGODB_CONTAINER_NAME="mongodb"
 FASTAPI_CONTAINER_NAME="fastapi_service"
 MONGODB_PORT=27017
-FASTAPI_PORT=8080  # Changed to 8080 as per user request
+FASTAPI_PORT=8080  # Host port
 FASTAPI_IMAGE_NAME="fastapi_service"
 
 # Create Podman network if it doesn't exist
