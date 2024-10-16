@@ -1,8 +1,7 @@
 import json
 
-# Define the patient record data
 patient_record = {
-    "study_id": "61928-1.2.250.1.118.3.1305.235.1.8008.46.1727122139",
+    "study_id": "61928-1.2.250.1.113.3.1305.235.1.8008.46.1727122139",
     "info": {
         "PatientID": "71054xfdsar",
         "PatientName": "SMITH^JANE",
@@ -41,6 +40,5 @@ patient_record = {
     "vector": [0.1 for _ in range(768)]  # Generates a list with 768 elements, each 0.1
 }
 
-# Write the data to a JSON file
 with open('patient_record.json', 'w') as f:
     json.dump(patient_record, f, indent=4)
