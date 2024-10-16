@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # podman_setup.sh
 
 # Exit immediately if a command exits with a non-zero status
@@ -6,10 +7,11 @@ set -e
 
 # Define variables
 NETWORK_NAME="ai_network"
-MONGODB_CONTAINER_NAME="mongodb"
+NEO4J_CONTAINER_NAME="neo4j"
 FASTAPI_CONTAINER_NAME="fastapi_service"
-MONGODB_PORT=27017
-FASTAPI_PORT=8080  # Host port
+NEO4J_PORT_HTTP=7474
+NEO4J_PORT_BOLT=7687
+FASTAPI_PORT=8080
 FASTAPI_IMAGE_NAME="fastapi_service"
 
 # Create Podman network if it doesn't exist
@@ -20,20 +22,19 @@ else
     echo "Podman network $NETWORK_NAME already exists."
 fi
 
-# Run MongoDB container with initialization scripts
-if ! podman ps --format "{{.Names}}" | grep -qw $MONGODB_CONTAINER_NAME; then
-    echo "Running MongoDB container: $MONGODB_CONTAINER_NAME"
+# Run Neo4j container
+if ! podman ps --format "{{.Names}}" | grep -qw $NEO4J_CONTAINER_NAME; then
+    echo "Running Neo4j container: $NEO4J_CONTAINER_NAME"
     podman run -d \
-        --name $MONGODB_CONTAINER_NAME \
+        --name $NEO4J_CONTAINER_NAME \
         --network $NETWORK_NAME \
-        -p $MONGODB_PORT:27017 \
-        -e MONGO_INITDB_DATABASE=patient_db \
-        -v mongodb_data:/data/db \
-        -v "$(pwd)/app/init-mongo:/docker-entrypoint-initdb.d:ro" \
-        mongo:latest
-    echo "MongoDB container started."
+        -p $NEO4J_PORT_HTTP:7474 \
+        -p $NEO4J_PORT_BOLT:7687 \
+        -e NEO4J_AUTH=neo4j/password \
+        neo4j:latest
+    echo "Neo4j container started."
 else
-    echo "MongoDB container $MONGODB_CONTAINER_NAME is already running."
+    echo "Neo4j container $NEO4J_CONTAINER_NAME is already running."
 fi
 
 # Build FastAPI container image
@@ -42,12 +43,12 @@ podman build -t $FASTAPI_IMAGE_NAME .
 
 # Run FastAPI container
 if ! podman ps --format "{{.Names}}" | grep -qw $FASTAPI_CONTAINER_NAME; then
-    echo "Running FastAPI container: $FASTapi_CONTAINER_NAME"
+    echo "Running FastAPI container: $FASTAPI_CONTAINER_NAME"
     podman run -d \
         --name $FASTAPI_CONTAINER_NAME \
         --network $NETWORK_NAME \
         -p $FASTAPI_PORT:8000 \
-        -e MONGODB_URI=mongodb://mongodb:27017 \
+        --env-file app/.env \
         $FASTAPI_IMAGE_NAME
     echo "FastAPI container started."
 else

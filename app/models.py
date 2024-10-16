@@ -1,9 +1,9 @@
 # app/models.py
 
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List
 
-class Info(BaseModel):
+class PatientInfo(BaseModel):
     PatientID: str = Field(..., example="71054xfdsar")
     PatientName: str = Field(..., example="SMITH^JANE")
     PatientAge: str = Field(..., example="012Y")
@@ -40,16 +40,22 @@ class Details(BaseModel):
 
 class PatientRecord(BaseModel):
     study_id: str = Field(..., example="61928-1.2.250.1.118.3.1305.235.1.8008.46.1727122139")
-    info: Info
+    info: PatientInfo
     femur: Femur
     tibia: Tibia
     total: Total
     pixel_distance: PixelDistance
     details: Details
+    vector: List[float] = Field(
+        ...,
+        min_items=768,
+        max_items=768,
+        example=[0.1] * 768  # Example for 768-dimensional vectors
+    )
 
     class Config:
-        allow_population_by_field_name = True  # Remains the same in Pydantic v2
-        json_schema_extra = {  # Renamed from schema_extra to json_schema_extra in Pydantic v2
+        allow_population_by_field_name = True
+        json_schema_extra = {
             "example": {
                 "study_id": "61928-1.2.250.1.118.3.1305.235.1.8008.46.1727122139",
                 "info": {
@@ -86,6 +92,7 @@ class PatientRecord(BaseModel):
                     "BodyPartExamined": "LEG",
                     "FieldOfViewDimensions": "[975, 391]",
                     "StationName": "EOSRM7"
-                }
+                },
+                "vector": [0.1] * 768  # Example vector data
             }
         }

@@ -1,43 +1,31 @@
+# app/database.py
+
 import os
-import time
-from pymongo import MongoClient
-from pymongo.errors import ConnectionFailure
+from neo4j import GraphDatabase
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
 
 # Environment variables
-MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://mongodb:27017")
+NEO4J_URI = os.getenv("NEO4J_URI", "bolt://neo4j:7687")
+NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "password")
 DATABASE_NAME = os.getenv("DATABASE_NAME", "patient_db")
-COLLECTION_NAME = os.getenv("COLLECTION_NAME", "patients")
 
-def get_mongo_client(uri, retries=5, delay=3):
-    """
-    Attempts to create a MongoClient with retries.
+# Initialize Neo4j driver
+driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
 
-    :param uri: MongoDB URI
-    :param retries: Number of retry attempts
-    :param delay: Delay between retries in seconds
-    :return: MongoClient instance
-    :raises Exception: If connection fails after retries
-    """
-    for attempt in range(retries):
-        try:
-            client = MongoClient(uri, serverSelectionTimeoutMS=5000)
-            # The ismaster command is cheap and does not require auth.
-            client.admin.command('ismaster')
-            print("Connected to MongoDB")
-            return client
-        except ConnectionFailure:
-            print(f"Connection to MongoDB failed. Retrying in {delay} seconds...")
-            time.sleep(delay)
-    raise Exception("Could not connect to MongoDB")
+def get_session():
+    return driver.session(database=DATABASE_NAME)
 
-# Initialize MongoDB client
-client = get_mongo_client(MONGODB_URI)
-db = client[DATABASE_NAME]
-collection = db[COLLECTION_NAME]
+# Initialize the database
+def init_db():
+    with get_session() as session:
+        # Create constraints if they don't exist
+        session.run("""
+            CREATE CONSTRAINT IF NOT EXISTS FOR (p:Patient)
+            REQUIRE p.study_id IS UNIQUE
+        """)
 
-# Create a unique index on study_id to prevent duplicates
-collection.create_index("study_id", unique=True)
+init_db()
