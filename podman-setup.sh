@@ -28,6 +28,7 @@ if ! podman ps --format "{{.Names}}" | grep -qw $MONGODB_CONTAINER_NAME; then
         --network $NETWORK_NAME \
         -p $MONGODB_PORT:27017 \
         -e MONGO_INITDB_DATABASE=patient_db \
+        -v mongodb_data:/data/db \
         -v "$(pwd)/app/init-mongo:/docker-entrypoint-initdb.d:ro" \
         mongo:latest
     echo "MongoDB container started."
@@ -41,7 +42,7 @@ podman build -t $FASTAPI_IMAGE_NAME .
 
 # Run FastAPI container
 if ! podman ps --format "{{.Names}}" | grep -qw $FASTAPI_CONTAINER_NAME; then
-    echo "Running FastAPI container: $FASTAPI_CONTAINER_NAME"
+    echo "Running FastAPI container: $FASTapi_CONTAINER_NAME"
     podman run -d \
         --name $FASTAPI_CONTAINER_NAME \
         --network $NETWORK_NAME \
