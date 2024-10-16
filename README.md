@@ -1,11 +1,15 @@
 # Reports API
 
+```
 +-------------------+          +-------------------+
 |                   |          |                   |
 |   FastAPI App     | <------> |    MongoDB        |
 |   (Podman)        |          |    (Podman)       |
 |                   |          |                   |
 +-------------------+          +-------------------+
+
+
+```
 
 
 ## Build the api service container 
