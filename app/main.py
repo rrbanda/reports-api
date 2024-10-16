@@ -4,20 +4,15 @@ from fastapi import FastAPI, HTTPException, Query
 from app.models import PatientRecord
 from app.database import collection
 from typing import List, Optional
-from bson import ObjectId
-from pymongo.errors import DuplicateKeyError
 
 app = FastAPI(title="Patient Management API", version="1.0")
-
-# Create a unique index on study_id to prevent duplicates
-collection.create_index("study_id", unique=True)
 
 @app.post("/patients/", response_model=PatientRecord, status_code=201)
 def create_patient_record(record: PatientRecord):
     record_dict = record.dict(by_alias=True)
     try:
         collection.insert_one(record_dict)
-    except DuplicateKeyError:
+    except Exception as e:
         raise HTTPException(status_code=400, detail="Study ID already exists")
     return record
 

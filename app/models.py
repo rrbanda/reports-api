@@ -1,7 +1,7 @@
 # app/models.py
 
 from pydantic import BaseModel, Field
-from typing import Optional, Dict
+from typing import Optional
 
 class Info(BaseModel):
     PatientID: str = Field(..., example="71054xfdsar")

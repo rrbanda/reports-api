@@ -1,7 +1,6 @@
 # Dockerfile
 
-# Use official Python image as base
-FROM python:3.10-slim
+FROM python:3.8-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -15,8 +14,8 @@ COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-# Copy app
-COPY app/ /app/app/
+# Copy project
+COPY . .
 
 # Expose port
 EXPOSE 8000
