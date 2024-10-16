@@ -1,12 +1,27 @@
+# .gitignore
+
 # Python
 __pycache__/
 *.pyc
 
-# Jupyter Notebook checkpoints
+# Virtual Environment
+venv/
+
+# Jupyter Notebook Checkpoints
 .ipynb_checkpoints/
 
-# Environment variables
+# Environment Variables
 app/.env
 
-# Docker
+# MongoDB Data (if using local installation)
+# Adjust the path if you have data mounted elsewhere
+/data/db/
+
+# Logs
 *.log
+
+# Podman
+*.podman
+
+# Docker
+Dockerfile

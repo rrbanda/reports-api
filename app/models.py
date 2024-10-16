@@ -48,8 +48,8 @@ class PatientRecord(BaseModel):
     details: Details
 
     class Config:
-        allow_population_by_field_name = True
-        schema_extra = {
+        allow_population_by_field_name = True  # Remains the same in Pydantic v2
+        json_schema_extra = {  # Renamed from schema_extra to json_schema_extra in Pydantic v2
             "example": {
                 "study_id": "61928-1.2.250.1.118.3.1305.235.1.8008.46.1727122139",
                 "info": {
