@@ -13,10 +13,6 @@ venv/
 # Environment Variables
 app/.env
 
-# MongoDB Data (if using local installation)
-# Adjust the path if you have data mounted elsewhere
-/data/db/
-
 # Logs
 *.log
 
@@ -25,3 +21,6 @@ app/.env
 
 # Docker
 Dockerfile
+
+# OS Files
+.DS_Store
