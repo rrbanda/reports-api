@@ -10,7 +10,7 @@ NETWORK_NAME="ai_network"
 MONGODB_CONTAINER_NAME="mongodb"
 FASTAPI_CONTAINER_NAME="fastapi_service"
 MONGODB_PORT=27017
-FASTAPI_PORT=8000
+FASTAPI_PORT=8080  # Changed to 8080 as per user request
 FASTAPI_IMAGE_NAME="fastapi_service"
 
 # Create Podman network if it doesn't exist
@@ -21,7 +21,7 @@ else
     echo "Podman network $NETWORK_NAME already exists."
 fi
 
-# Run MongoDB container
+# Run MongoDB container with initialization scripts
 if ! podman ps --format "{{.Names}}" | grep -qw $MONGODB_CONTAINER_NAME; then
     echo "Running MongoDB container: $MONGODB_CONTAINER_NAME"
     podman run -d \
@@ -29,6 +29,7 @@ if ! podman ps --format "{{.Names}}" | grep -qw $MONGODB_CONTAINER_NAME; then
         --network $NETWORK_NAME \
         -p $MONGODB_PORT:27017 \
         -e MONGO_INITDB_DATABASE=patient_db \
+        -v "$(pwd)/app/init-mongo:/docker-entrypoint-initdb.d:ro" \
         mongo:latest
     echo "MongoDB container started."
 else
@@ -46,7 +47,7 @@ if ! podman ps --format "{{.Names}}" | grep -qw $FASTAPI_CONTAINER_NAME; then
         --name $FASTAPI_CONTAINER_NAME \
         --network $NETWORK_NAME \
         -p $FASTAPI_PORT:8000 \
-        -e MONGODB_URI=mongodb://$MONGODB_CONTAINER_NAME:27017 \
+        -e MONGODB_URI=mongodb://mongodb:27017 \
         $FASTAPI_IMAGE_NAME
     echo "FastAPI container started."
 else

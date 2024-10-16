@@ -7,6 +7,11 @@ from typing import List, Optional
 
 app = FastAPI(title="Patient Management API", version="1.0")
 
+# Root endpoint (optional)
+@app.get("/", tags=["Root"])
+def read_root():
+    return {"message": "Welcome to the Patient Management API"}
+
 @app.post("/patients/", response_model=PatientRecord, status_code=201)
 def create_patient_record(record: PatientRecord):
     record_dict = record.dict(by_alias=True)
