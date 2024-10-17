@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build and Push Container Image
 
 on:
   push:
@@ -18,33 +18,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up Docker Buildx
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      # Step 2: Install Podman
+      - name: Install Podman
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y podman
 
       # Step 3: Log in to Quay.io
       - name: Log in to Quay.io
-        uses: docker/login-action@v2
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_PASSWORD }}
+        run: |
+          echo ${{ secrets.QUAY_PASSWORD }} | podman login quay.io --username ${{ secrets.QUAY_USERNAME }} --password-stdin
 
-      # Step 4: Build and push Docker image to Quay.io
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: Dockerfile
-          push: true
-          tags: quay.io/rbrhssa/reports-api:latest
-          # You can also pass build arguments as environment variables if needed
-          build-args: |
-            MY_ENV_VAR=${{ env.MY_ENV_VAR }}
-            ANOTHER_ENV_VAR=${{ env.ANOTHER_ENV_VAR }}
+      # Step 4: Build and push the container image to Quay.io
+      - name: Build and push Container image
+        run: |
+          podman build -t quay.io/rbrhssa/reports-api:latest -f Containerfile .
+          podman push quay.io/rbrhssa/reports-api:latest
 
       # Step 5: Verify the image pushed successfully (optional)
       - name: Verify image exists in Quay.io
         run: |
           echo "Verifying the image has been pushed successfully to Quay.io..."
-          docker pull quay.io/rbrhssa/reports-api:latest
+          podman pull quay.io/rbrhssa/reports-api:latest
