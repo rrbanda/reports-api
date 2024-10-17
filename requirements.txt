@@ -1,5 +1,4 @@
-fastapi
-uvicorn
-neo4j
-pydantic
-python-dotenv
+fastapi==0.100.0
+uvicorn==0.18.2
+neo4j==5.4.0
+pydantic==1.10.2  # This version is compatible with FastAPI

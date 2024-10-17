@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fastapi-neo4j-pod
+spec:
+  containers:
+    - name: neo4j
+      image: neo4j:latest
+      ports:
+        - containerPort: 7474
+          hostPort: 7474
+        - containerPort: 7687
+          hostPort: 7687
+      env:
+        - name: NEO4J_AUTH
+          value: "neo4j/password"
+    - name: fastapi
+      image: quay.io/rbrhssa/reports-api:latest
+      ports:
+        - containerPort: 8000
+          hostPort: 8000
+      dependsOn:
+        - neo4j
+      env:
+        - name: NEO4J_URI
+          value: "bolt://neo4j:7687"
+        - name: NEO4J_USER
+          value: "neo4j"
+        - name: NEO4J_PASSWORD
+          value: "password"
