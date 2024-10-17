@@ -1,5 +1,3 @@
-# File: .github/workflows/docker-build-push.yml
-
 name: Build and Push Docker Image
 
 on:
@@ -10,6 +8,10 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    env:
+      # Define your environment variables here
+      MY_ENV_VAR: 'value'
+      ANOTHER_ENV_VAR: 'another_value'
 
     steps:
       # Step 1: Checkout the repository
@@ -36,6 +38,10 @@ jobs:
           file: Dockerfile
           push: true
           tags: quay.io/rbrhssa/reports-api:latest
+          # You can also pass build arguments as environment variables if needed
+          build-args: |
+            MY_ENV_VAR=${{ env.MY_ENV_VAR }}
+            ANOTHER_ENV_VAR=${{ env.ANOTHER_ENV_VAR }}
 
       # Step 5: Verify the image pushed successfully (optional)
       - name: Verify image exists in Quay.io

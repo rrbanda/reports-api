@@ -24,3 +24,6 @@ Dockerfile
 
 # OS Files
 .DS_Store
+
+/.idea/
+
