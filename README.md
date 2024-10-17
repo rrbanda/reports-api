@@ -1,4 +1,4 @@
-# API for image analysis reports 
+# API for image analysis reports in json format
 
 ## Overview
 This is a FastAPI application that provides a RESTful API to manage patient data using a Neo4j database. The application allows you to perform CRUD (Create, Read, Update, Delete) operations for managing patient records. This solution is containerized, making it easy to deploy using Podman.
