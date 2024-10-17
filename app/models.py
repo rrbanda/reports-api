@@ -1,33 +1,35 @@
-from pydantic import BaseModel
+# File: app/models.py
+from pydantic import BaseModel, Field
+from typing import Dict
 
-class InfoModel(BaseModel):
+class Info(BaseModel):
     PatientID: str
     PatientName: str
     PatientAge: str
     StudyDate: str
 
-class FemurModel(BaseModel):
-    Right_femur: str
-    Left_femur: str
+class Femur(BaseModel):
+    Right_femur: str = Field(alias="Right femur")
+    Left_femur: str = Field(alias="Left femur")
     Difference: str
 
-class TibiaModel(BaseModel):
-    Right_tibia: str
-    Left_tibia: str
+class Tibia(BaseModel):
+    Right_tibia: str = Field(alias="Right tibia")
+    Left_tibia: str = Field(alias="Left tibia")
     Difference: str
 
-class TotalModel(BaseModel):
-    Total_right: str
-    Total_left: str
+class Total(BaseModel):
+    Total_right: str = Field(alias="Total right")
+    Total_left: str = Field(alias="Total left")
     Difference: str
 
-class PixelDistanceModel(BaseModel):
-    Left_femur: int
-    Left_tibia: int
-    Right_femur: int
-    Right_tibia: int
+class PixelDistance(BaseModel):
+    Left_femur: int = Field(alias="Left femur")
+    Left_tibia: int = Field(alias="Left tibia")
+    Right_femur: int = Field(alias="Right femur")
+    Right_tibia: int = Field(alias="Right tibia")
 
-class DetailsModel(BaseModel):
+class Details(BaseModel):
     AccessionNumber: str
     StudyDescription: str
     SeriesDescription: str
@@ -35,10 +37,13 @@ class DetailsModel(BaseModel):
     FieldOfViewDimensions: str
     StationName: str
 
-class PatientRecordModel(BaseModel):
-    info: InfoModel
-    femur: FemurModel
-    tibia: TibiaModel
-    total: TotalModel
-    pixel_distance: PixelDistanceModel
-    details: DetailsModel
+class MeasurementData(BaseModel):
+    info: Info
+    femur: Femur
+    tibia: Tibia
+    total: Total
+    pixel_distance: PixelDistance
+    details: Details
+
+class PatientData(BaseModel):
+    data: Dict[str, MeasurementData]

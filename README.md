@@ -3,7 +3,7 @@
 ```
 +-------------------+          +-------------------+
 |                   |          |                   |
-|   FastAPI App     | <------> |    MongoDB        |
+|   FastAPI App     | <------> |    Neo4j        |
 |   (Podman)        |          |    (Podman)       |
 |                   |          |                   |
 +-------------------+          +-------------------+
@@ -31,12 +31,7 @@
 ## To run mongodb
 
 ``` 
-podman run -d \
-  --name mongodb \
-  --network ai_network \
-  -p 27017:27017 \
-  -e MONGO_INITDB_DATABASE=patient_db \
-  mongo:latest ` 
+
 
 ```
 ## Run reports api as podman container
