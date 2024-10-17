@@ -25,10 +25,14 @@ The patient data structure is comprehensive and includes:
 ## Setup and Run using Podman
 The following steps guide you through building and running the FastAPI application and Neo4j database using Podman.
 
+Note : If you do not want to build you can use image `quay.io/rbrhssa/reports-api:latest` and run it as well using podman , Check pod.yaml for the same.
+
 ### Step 1: Build the FastAPI Docker Image
 From the root of the project, run:
 
 ` podman build -t fastapi-neo4j-app . `
+
+
 
 # Using Podman Desktop 
 
