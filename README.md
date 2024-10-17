@@ -185,13 +185,14 @@ Checks the health of the API and database connection.
 
 ## Summary of API Endpoints
 
-POST /add_data: Add a new patient record.
-PUT /update_data/{patient_id}: Update a specific patient's data.
-GET /get_data/{patient_id}: Retrieve the data for a specific patient.
-GET /get_all_patients: Retrieve the data for all patients.
-DELETE /delete_data/{patient_id}: Delete a specific patient's data.
-GET /health_check: Health check for the API and database.
-License
+* POST /add_data: Add a new patient record.
+* PUT /update_data/{patient_id}: Update a specific patient's data.
+* GET /get_data/{patient_id}: Retrieve the data for a specific patient.
+* GET /get_all_patients: Retrieve the data for all patients.
+* DELETE /delete_data/{patient_id}: Delete a specific patient's data.
+* GET /health_check: Health check for the API and database.
+
+## License
 
 This project is licensed under the MIT License.
 
