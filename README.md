@@ -30,6 +30,14 @@ From the root of the project, run:
 
 ` podman build -t fastapi-neo4j-app . `
 
+# Using Podman Desktop 
+
+<img width="1512" alt="Screenshot 2024-10-16 at 10 47 04 PM" src="https://github.com/user-attachments/assets/56a084a4-9741-4df6-9c24-61607aea9ea3">
+<img width="1512" alt="Screenshot 2024-10-16 at 10 44 49 PM" src="https://github.com/user-attachments/assets/42cd2a64-658f-41bc-b9ba-9ffb878f3455">
+<img width="1512" alt="Screenshot 2024-10-16 at 10 44 56 PM" src="https://github.com/user-attachments/assets/571d56f1-cea7-425c-a4f0-bb4058ee4bff">
+<img width="1512" alt="Screenshot 2024-10-16 at 10 45 04 PM" src="https://github.com/user-attachments/assets/99c720b8-efa8-402c-94f2-ea4fb1a4afa6">
+
+
 
 Step 2: Create and Run the Pod
 
@@ -48,7 +56,9 @@ Create a pod and run the FastAPI and Neo4j containers within it:
 ` podman run -d --pod fastapi-pod --name fastapi-container fastapi-neo4j-app `
 
 
+
 Step 3: Access the API
+
 The API will be accessible at http://localhost:8000.
 
 ## API Endpoints and Testing
