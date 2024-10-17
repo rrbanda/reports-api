@@ -39,7 +39,7 @@ From the root of the project, run:
 
 
 
-Step 2: Create and Run the Pod
+Step 2: Create and Run the Pod using CLI for the same from terminal 
 
 Create a pod and run the FastAPI and Neo4j containers within it:
 
