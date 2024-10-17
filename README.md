@@ -2,6 +2,10 @@
 <img width="1512" alt="Screenshot 2024-10-17 at 12 41 39 AM" src="https://github.com/user-attachments/assets/44dafb75-a139-4e7a-a3ff-c1daf8feb804">
 
 
+<img width="1512" alt="Screenshot 2024-10-17 at 12 49 20 AM" src="https://github.com/user-attachments/assets/88344202-e6df-4ab2-ae85-84fd45992d2c">
+
+
+
 
 ## Overview
 This is a FastAPI application that provides a RESTful API to manage patient data using a Neo4j database. The application allows you to perform CRUD (Create, Read, Update, Delete) operations for managing patient records. This solution is containerized, making it easy to deploy using Podman.
