@@ -1,34 +1,39 @@
-# File: app/models.py
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import Dict
 
+# Model for the "info" section of the patient data
 class Info(BaseModel):
     PatientID: str
     PatientName: str
     PatientAge: str
     StudyDate: str
 
+# Model for the "femur" measurements
 class Femur(BaseModel):
-    Right_femur: str = Field(alias="Right femur")
-    Left_femur: str = Field(alias="Left femur")
+    Right_femur: str
+    Left_femur: str
     Difference: str
 
+# Model for the "tibia" measurements
 class Tibia(BaseModel):
-    Right_tibia: str = Field(alias="Right tibia")
-    Left_tibia: str = Field(alias="Left tibia")
+    Right_tibia: str
+    Left_tibia: str
     Difference: str
 
+# Model for the "total" measurements
 class Total(BaseModel):
-    Total_right: str = Field(alias="Total right")
-    Total_left: str = Field(alias="Total left")
+    Total_right: str
+    Total_left: str
     Difference: str
 
+# Model for the "pixel_distance" section
 class PixelDistance(BaseModel):
-    Left_femur: int = Field(alias="Left femur")
-    Left_tibia: int = Field(alias="Left tibia")
-    Right_femur: int = Field(alias="Right femur")
-    Right_tibia: int = Field(alias="Right tibia")
+    Left_femur: int
+    Left_tibia: int
+    Right_femur: int
+    Right_tibia: int
 
+# Model for the "details" section of the patient data
 class Details(BaseModel):
     AccessionNumber: str
     StudyDescription: str
@@ -37,7 +42,8 @@ class Details(BaseModel):
     FieldOfViewDimensions: str
     StationName: str
 
-class MeasurementData(BaseModel):
+# Main model to combine all the above data
+class PatientData(BaseModel):
     info: Info
     femur: Femur
     tibia: Tibia
@@ -45,5 +51,6 @@ class MeasurementData(BaseModel):
     pixel_distance: PixelDistance
     details: Details
 
-class PatientData(BaseModel):
-    data: Dict[str, MeasurementData]
+# The MeasurementData model, which will represent the complete dataset
+class MeasurementData(BaseModel):
+    data: Dict[str, PatientData]

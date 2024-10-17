@@ -1,5 +1,6 @@
-# .github/workflows/build-and-push.yml
-name: Build and Push to Quay.io
+# File: .github/workflows/docker-build-push.yml
+
+name: Build and Push Docker Image
 
 on:
   push:
@@ -11,17 +12,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
+      # Step 2: Set up Docker Buildx
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
 
+      # Step 3: Log in to Quay.io
       - name: Log in to Quay.io
-        run: |
-          echo "${{ secrets.QUAY_IO_PASSWORD }}" | docker login quay.io -u "${{ secrets.QUAY_IO_USERNAME }}" --password-stdin
+        uses: docker/login-action@v2
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_PASSWORD }}
 
-      - name: Build and push to Quay.io
+      # Step 4: Build and push Docker image to Quay.io
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: quay.io/rbrhssa/reports-api:latest
+
+      # Step 5: Verify the image pushed successfully (optional)
+      - name: Verify image exists in Quay.io
         run: |
-          docker build -t quay.io/rbrhssa/reports-api:latest .
-          docker push quay.io/rbrhssa/reports-api:latest
+          echo "Verifying the image has been pushed successfully to Quay.io..."
+          docker pull quay.io/rbrhssa/reports-api:latest
