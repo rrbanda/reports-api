@@ -51,11 +51,12 @@ Create a pod and run the FastAPI and Neo4j containers within it:
 Step 3: Access the API
 The API will be accessible at http://localhost:8000.
 
-API Endpoints and Testing
+## API Endpoints and Testing
 
 Below are the API endpoints available and the curl commands to test each one.
 
 1. Add Patient Data - POST /add_data
+
 Adds a new patient record.
 
 ```
@@ -105,6 +106,7 @@ curl -X POST "http://localhost:8000/add_data" -H "Content-Type: application/json
 
 
 2. Update Patient Data - PUT /update_data/{patient_id}
+
 Updates an existing patient's data.
 ```
 curl -X PUT "http://localhost:8000/update_data/71054xfdsar" -H "Content-Type: application/json" -d '{
@@ -151,6 +153,7 @@ curl -X PUT "http://localhost:8000/update_data/71054xfdsar" -H "Content-Type: ap
 ```
 
 3. Get Patient Data - GET /get_data/{patient_id}
+
 Retrieves data for a specific patient by their PatientID.
 
 
@@ -159,13 +162,13 @@ Retrieves data for a specific patient by their PatientID.
 
 4. Get All Patients Data - GET /get_all_patients
 
-
 Retrieves data for all patients.
 
 ` curl -X GET "http://localhost:8000/get_all_patients" -H "Content-Type: application/json" `
 
 
 5. Delete Patient Data - DELETE /delete_data/{patient_id}
+
 Deletes a specific patient's data.
 
 
@@ -173,13 +176,14 @@ Deletes a specific patient's data.
 
 
 6. Health Check - GET /health_check
+
 Checks the health of the API and database connection.
 
 ` curl -X GET "http://localhost:8000/health_check" -H "Content-Type: application/json" `
 
 
 
-Summary of API Endpoints
+## Summary of API Endpoints
 
 POST /add_data: Add a new patient record.
 PUT /update_data/{patient_id}: Update a specific patient's data.
@@ -191,10 +195,10 @@ License
 
 This project is licensed under the MIT License.
 
-Contributing
+## Contributing
 
 Contributions are welcome! Feel free to open an issue or submit a pull request.
 
-Contact
+### Contact
 
 For questions or support, please reach out to the project maintainer.
