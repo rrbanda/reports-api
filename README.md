@@ -32,15 +32,19 @@ From the root of the project, run:
 
 
 Step 2: Create and Run the Pod
+
 Create a pod and run the FastAPI and Neo4j containers within it:
 
 # Create a Pod
+
 ` podman pod create --name fastapi-pod -p 8000:8000 -p 7687:7687 `
 
 # Run the Neo4j container
+
 ` podman run -d --pod fastapi-pod --name neo4j-container -e NEO4J_AUTH=neo4j/password neo4j `
 
 # Run the FastAPI container
+
 ` podman run -d --pod fastapi-pod --name fastapi-container fastapi-neo4j-app `
 
 
@@ -54,7 +58,7 @@ Below are the API endpoints available and the curl commands to test each one.
 1. Add Patient Data - POST /add_data
 Adds a new patient record.
 
-``
+```
 curl -X POST "http://localhost:8000/add_data" -H "Content-Type: application/json" -d '{
   "data": {
     "61928-1.2.250.1.118.3.1305.235.1.8008.46.1727122139": {
@@ -97,11 +101,12 @@ curl -X POST "http://localhost:8000/add_data" -H "Content-Type: application/json
   }
 }'
 
+```
 
 
 2. Update Patient Data - PUT /update_data/{patient_id}
 Updates an existing patient's data.
-
+```
 curl -X PUT "http://localhost:8000/update_data/71054xfdsar" -H "Content-Type: application/json" -d '{
   "data": {
     "61928-1.2.250.1.118.3.1305.235.1.8008.46.1727122139": {
@@ -143,13 +148,13 @@ curl -X PUT "http://localhost:8000/update_data/71054xfdsar" -H "Content-Type: ap
     }
   }
 }'
-
+```
 
 3. Get Patient Data - GET /get_data/{patient_id}
 Retrieves data for a specific patient by their PatientID.
 
 
-curl -X GET "http://localhost:8000/get_data/71054xfdsar" -H "Content-Type: application/json"
+` curl -X GET "http://localhost:8000/get_data/71054xfdsar" -H "Content-Type: application/json" `
 
 
 4. Get All Patients Data - GET /get_all_patients
@@ -157,22 +162,20 @@ curl -X GET "http://localhost:8000/get_data/71054xfdsar" -H "Content-Type: appli
 
 Retrieves data for all patients.
 
-curl -X GET "http://localhost:8000/get_all_patients" -H "Content-Type: application/json"
+` curl -X GET "http://localhost:8000/get_all_patients" -H "Content-Type: application/json" `
 
 
 5. Delete Patient Data - DELETE /delete_data/{patient_id}
 Deletes a specific patient's data.
 
 
-curl -X DELETE "http://localhost:8000/delete_data/71054xfdsar" -H "Content-Type: application/json"
+` curl -X DELETE "http://localhost:8000/delete_data/71054xfdsar" -H "Content-Type: application/json" `
 
 
 6. Health Check - GET /health_check
 Checks the health of the API and database connection.
 
-sh
-Copy code
-curl -X GET "http://localhost:8000/health_check" -H "Content-Type: application/json"
+` curl -X GET "http://localhost:8000/health_check" -H "Content-Type: application/json" `
 
 
 
