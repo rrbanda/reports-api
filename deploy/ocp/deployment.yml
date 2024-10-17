@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-neo4j-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi-neo4j
+  template:
+    metadata:
+      labels:
+        app: fastapi-neo4j
+    spec:
+      containers:
+        - name: neo4j
+          image: neo4j:latest
+          ports:
+            - containerPort: 7474
+            - containerPort: 7687
+          env:
+            - name: NEO4J_AUTH
+              value: "neo4j/password"
+        - name: fastapi
+          image: quay.io/rbrhssa/reports-api:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: NEO4J_URI
+              value: "bolt://localhost:7687"  # Use localhost or the service name
+            - name: NEO4J_USER
+              value: "neo4j"
+            - name: NEO4J_PASSWORD
+              value: "password"
