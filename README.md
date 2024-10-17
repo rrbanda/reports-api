@@ -5,8 +5,6 @@
 <img width="1512" alt="Screenshot 2024-10-17 at 12 49 20 AM" src="https://github.com/user-attachments/assets/88344202-e6df-4ab2-ae85-84fd45992d2c">
 
 
-
-
 ## Overview
 This is a FastAPI application that provides a RESTful API to manage patient data using a Neo4j database. The application allows you to perform CRUD (Create, Read, Update, Delete) operations for managing patient records. This solution is containerized, making it easy to deploy using Podman.
 
@@ -34,11 +32,10 @@ The following steps guide you through building and running the FastAPI applicati
 
 Note : If you do not want to build you can use image `quay.io/rbrhssa/reports-api:latest` and run it as well using podman , Check pod.yaml for the same.
 
-### Step 1: Build the FastAPI Docker Image
+### Build the FastAPI Docker Image
 From the root of the project, run:
 
 ` podman build -t fastapi-neo4j-app . `
-
 
 
 # Using Podman Desktop 
@@ -175,30 +172,28 @@ curl -X PUT "http://localhost:8000/update_data/71054xfdsar" -H "Content-Type: ap
 }'
 ```
 
-3. Get Patient Data - GET /get_data/{patient_id}
+### Get Patient Data - GET /get_data/{patient_id}
 
 Retrieves data for a specific patient by their PatientID.
 
 
 ` curl -X GET "http://localhost:8000/get_data/71054xfdsar" -H "Content-Type: application/json" `
 
-
-4. Get All Patients Data - GET /get_all_patients
+### Get All Patients Data - GET /get_all_patients
 
 Retrieves data for all patients.
 
 ` curl -X GET "http://localhost:8000/get_all_patients" -H "Content-Type: application/json" `
 
 
-5. Delete Patient Data - DELETE /delete_data/{patient_id}
+### Delete Patient Data - DELETE /delete_data/{patient_id}
 
 Deletes a specific patient's data.
 
 
 ` curl -X DELETE "http://localhost:8000/delete_data/71054xfdsar" -H "Content-Type: application/json" `
 
-
-6. Health Check - GET /health_check
+### Health Check - GET /health_check
 
 Checks the health of the API and database connection.
 
